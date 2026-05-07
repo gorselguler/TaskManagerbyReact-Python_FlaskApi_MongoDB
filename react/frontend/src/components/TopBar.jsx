@@ -1,3 +1,4 @@
+import { useState } from 'react';
 function TopBar() {
 const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -28,10 +29,12 @@ const user = {
             </div>
           </div>
         ) : (
-          /* Register Button */
-          <button className="bg-white text-indigo-700 px-4 py-1.5 rounded-lg font-semibold hover:bg-indigo-50 transition active:scale-95">
-            Register
-          </button>
+         <button 
+  onClick={handleLogin} 
+  className="bg-white text-indigo-700 px-4 py-1.5 rounded-lg font-semibold hover:bg-indigo-50 transition active:scale-95"
+>
+  Login
+</button>
         )}
       </div>
     </div>
