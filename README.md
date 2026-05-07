@@ -1,18 +1,29 @@
 # Task Manager App
 
-A full-stack Task Manager application built with **React**, **Python Flask**, and **MongoDB**.
+A full-stack Task Manager application built with **React 19**, **Tailwind CSS v4**, **Python Flask**, and **MongoDB**.
+
+![Dashboard Preview](Dashboard.png)
 
 ---
 
 ## Tech Stack
 
-| Layer    | Technology     |
-|----------|----------------|
-| Frontend | React + Vite   |
-| Backend  | Python + Flask |
-| Database | MongoDB        |
+| Layer    | Technology           |
+|----------|----------------------|
+| Frontend | React + Vite + Tailwind CSS v4 |
+| Backend  | Python + Flask      |
+| Database | MongoDB              |
 
 ---
+
+## Design System
+
+The application features a modern dark-themed dashboard with custom color palettes:
+
+- **Dusk Theme**: Indigo to Pink gradients for primary actions and system highlights.
+- **Warm Sand**: Amber to Red gradients for documents and secondary accents.
+- **Glassmorphism**: Border-based card designs and semi-transparent backgrounds.
+
 
 ## Project Structure
 

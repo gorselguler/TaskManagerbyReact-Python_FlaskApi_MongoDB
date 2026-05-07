@@ -1,1 +1,15 @@
 @import "tailwindcss";
+
+@theme {
+  /* Dusk Gradient Colors */
+  --color-dusk-start: #6366f1; /* Indigo */
+  --color-dusk-end: #ec4899;   /* Pink */
+  
+  /* Warm Sand Gradient Colors */
+  --color-warm-start: #f59e0b; /* Amber */
+  --color-warm-end: #ef4444;   /* Red */
+
+  /* Dark Professional Background */
+  --color-dashboard-bg: #0f172a; /* Slate 900 */
+  --color-card-bg: #1e293b;      /* Slate 800 */
+}
