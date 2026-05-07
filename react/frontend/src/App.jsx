@@ -3,23 +3,23 @@ import './App.css';
 const API = 'http://localhost:5000';   
 
 function App() {
-  const [todos, setTodos] = useState([]);
+  const [tasks, setTasks] = useState([]);
   const [title, setTitle] = useState('');
 
   useEffect(() => {                    
-    fetch(`${API}/todos`)
+    fetch(`${API}/tasks`)
       .then(res => res.json())
-      .then(data => setTodos(data));
+      .then(data => setTasks(data));
   }, []);
 
-  const addTodo = () => {              
-    fetch(`${API}/todos`, {
+  const addTask = () => {              
+    fetch(`${API}/tasks`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ title }),
     })
       .then(res => res.json())
-      .then(newTodo => setTodos([...todos, newTodo]));
+      .then(newTask => setTasks([...tasks, newTask]));
   };
 
 return (
@@ -36,13 +36,13 @@ return (
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
-      <button className="btn" onClick={addTodo}>Add Task</button>
+      <button className="btn" onClick={addTask}>Add Task</button>
     </div>
 
-    <ul className="todo-list">
-      {todos.map(todo => (
-        <li key={todo.id} className="todo-item">
-          {todo.title}
+    <ul className="task-list">
+      {tasks.map(task => (
+        <li key={task.id} className="task-item">
+          {task.title}
         </li>
       ))}
     </ul>

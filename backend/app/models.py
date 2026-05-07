@@ -9,5 +9,5 @@ load_dotenv()
 MONGO_URI = os.getenv('MONGO_URI', 'mongodb://localhost:27017')
 
 client = MongoClient(MONGO_URI)
-db = client['todoapp']          # Database name
-todos_collection = db['todos']  # Collection (like a table) name
+db = client['taskmanager']       # Database name
+tasks_collection = db['tasks']  # Collection (like a table) name

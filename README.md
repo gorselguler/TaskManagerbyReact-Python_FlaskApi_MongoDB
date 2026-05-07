@@ -1,6 +1,6 @@
 # Task Manager App
 
-A full-stack Todo application built with **React**, **Python Flask**, and **MongoDB**.
+A full-stack Task Manager application built with **React**, **Python Flask**, and **MongoDB**.
 
 ---
 
@@ -82,10 +82,10 @@ Frontend runs at: `http://localhost:5173`
 
 | Method | Endpoint       | Description        |
 |--------|----------------|--------------------|
-| GET    | /todos         | Get all tasks      |
-| POST   | /todos         | Create a new task  |
-| PUT    | /todos/`<id>`  | Update a task      |
-| DELETE | /todos/`<id>`  | Delete a task      |
+| GET    | /tasks         | Get all tasks      |
+| POST   | /tasks         | Create a new task  |
+| PUT    | /tasks/`<id>`  | Update a task      |
+| DELETE | /tasks/`<id>`  | Delete a task      |
 
 ---
 

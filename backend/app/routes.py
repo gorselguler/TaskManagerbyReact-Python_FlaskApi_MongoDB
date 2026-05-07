@@ -1,43 +1,43 @@
 from flask import Blueprint, request, jsonify
-from .models import todos_collection
+from .models import tasks_collection
 from bson import ObjectId  # MongoDB uses ObjectId instead of integer IDs
 
-todos_bp = Blueprint('todos', __name__)
+tasks_bp = Blueprint('tasks', __name__)
 
 # Helper: convert MongoDB document to a plain dict
-def todo_to_dict(todo):
+def task_to_dict(task):
     return {
-        'id': str(todo['_id']),   # Convert ObjectId to string
-        'title': todo['title'],
-        'done': todo.get('done', False)
+        'id': str(task['_id']),   # Convert ObjectId to string
+        'title': task['title'],
+        'done': task.get('done', False)
     }
 
-# GET /todos — return all todos
-@todos_bp.route('/todos', methods=['GET'])
-def get_todos():
-    todos = todos_collection.find()
-    return jsonify([todo_to_dict(t) for t in todos])
+# GET /tasks — return all tasks
+@tasks_bp.route('/tasks', methods=['GET'])
+def get_tasks():
+    tasks = tasks_collection.find()
+    return jsonify([task_to_dict(t) for t in tasks])
 
-# POST /todos — create a new todo
-@todos_bp.route('/todos', methods=['POST'])
-def create_todo():
+# POST /tasks — create a new task
+@tasks_bp.route('/tasks', methods=['POST'])
+def create_task():
     data = request.get_json()
     if not data or not data.get('title'):
         return jsonify({'error': 'Title is required'}), 400
-    result = todos_collection.insert_one({'title': data['title'], 'done': False})
-    new_todo = todos_collection.find_one({'_id': result.inserted_id})
-    return jsonify(todo_to_dict(new_todo)), 201
+    result = tasks_collection.insert_one({'title': data['title'], 'done': False})
+    new_task = tasks_collection.find_one({'_id': result.inserted_id})
+    return jsonify(task_to_dict(new_task)), 201
 
-# PUT /todos/<id> — update (toggle done) a todo
-@todos_bp.route('/todos/<id>', methods=['PUT'])
-def update_todo(id):
+# PUT /tasks/<id> — update (toggle done) a task
+@tasks_bp.route('/tasks/<id>', methods=['PUT'])
+def update_task(id):
     data = request.get_json()
-    todos_collection.update_one({'_id': ObjectId(id)}, {'$set': data})
-    updated = todos_collection.find_one({'_id': ObjectId(id)})
-    return jsonify(todo_to_dict(updated))
+    tasks_collection.update_one({'_id': ObjectId(id)}, {'$set': data})
+    updated = tasks_collection.find_one({'_id': ObjectId(id)})
+    return jsonify(task_to_dict(updated))
 
-# DELETE /todos/<id> — delete a todo
-@todos_bp.route('/todos/<id>', methods=['DELETE'])
-def delete_todo(id):
-    todos_collection.delete_one({'_id': ObjectId(id)})
+# DELETE /tasks/<id> — delete a task
+@tasks_bp.route('/tasks/<id>', methods=['DELETE'])
+def delete_task(id):
+    tasks_collection.delete_one({'_id': ObjectId(id)})
     return jsonify({'message': 'Deleted'})
