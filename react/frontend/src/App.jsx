@@ -7,6 +7,7 @@ function App() {
   const [tasks, setTasks] = useState([]);
   const [newTaskTitle, setNewTaskTitle] = useState('');
   const [isAdding, setIsAdding] = useState(false); // Controls the input visibility
+  const [newTaskDate, setNewTaskDate] = useState(''); // New state for date
 
   // ─── 2. EFFECTS (YAN ETKİLER) ───
   useEffect(() => {
@@ -25,6 +26,19 @@ function App() {
     }
   };
 
+  const deleteTask = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:5000/tasks/${id}`, {
+        method: 'DELETE',
+      });
+      if (response.ok) {
+        setTasks(tasks.filter(task => task.id !== id));
+      }
+    } catch (error) {
+      console.error('Error deleting task:', error);
+    }
+  };
+
   const addTask = async () => {
     if (!newTaskTitle) return;
 
@@ -32,13 +46,17 @@ function App() {
       const response = await fetch('http://localhost:5000/tasks', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title: newTaskTitle }),
+        body: JSON.stringify({ 
+          title: newTaskTitle,
+          date: newTaskDate
+        }),
       });
 
       if (response.ok) {
         const addedTask = await response.json();
         setTasks([...tasks, addedTask]); // Add the new task from DB to the list
         setNewTaskTitle(''); // Clear input
+        setNewTaskDate(''); // Clear date
         setIsAdding(false); // Hide input
       }
     } catch (error) {
@@ -76,27 +94,49 @@ function App() {
                 <div className="p-7">
                   <div className="flex justify-between items-center mb-6">
                     <h3 className="font-bold text-white text-lg tracking-wide uppercase">Last Notes</h3>
-                    {/* Toggle Button */}
+                    {/* Toggle Button: Purple Styled Wide Button */}
                     <button 
                       onClick={() => setIsAdding(!isAdding)}
-                      className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 cursor-pointer hover:bg-slate-700 transition border border-white/5"
+                      className={`px-4 py-2 rounded-xl flex items-center gap-2 text-xs font-bold uppercase tracking-wider transition duration-300 border ${
+                        isAdding 
+                        ? 'bg-slate-800 text-slate-400 border-slate-700 hover:bg-slate-700' 
+                        : 'bg-gradient-to-r from-dusk-start to-dusk-end text-white border-white/10 hover:shadow-[0_0_20px_rgba(139,92,246,0.3)]'
+                      }`}
                     >
-                      <span className="text-xl leading-none">{isAdding ? '×' : '+'}</span>
+                      {isAdding ? (
+                        <><span>×</span> Cancel</>
+                      ) : (
+                        <><span>+</span> Quick Note</>
+                      )}
                     </button>
                   </div>
 
                   {/* Inline Quick Note Input */}
                   {isAdding && (
-                    <div className="mb-6 animate-in fade-in slide-in-from-top-2 duration-300">
+                    <div className="mb-6 animate-in fade-in slide-in-from-top-2 duration-300 space-y-3">
                       <input
                         autoFocus
                         type="text"
                         value={newTaskTitle}
                         onChange={(e) => setNewTaskTitle(e.target.value)}
                         onKeyDown={handleKeyPress}
-                        placeholder="Type note and press Enter..."
+                        placeholder="Type note..."
                         className="w-full bg-slate-900 border border-dusk-start/30 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-dusk-start transition"
                       />
+                      <div className="flex gap-2">
+                        <input
+                          type="date"
+                          value={newTaskDate}
+                          onChange={(e) => setNewTaskDate(e.target.value)}
+                          className="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-white text-xs focus:outline-none focus:border-dusk-start transition"
+                        />
+                        <button 
+                          onClick={addTask}
+                          className="px-6 py-2 bg-gradient-to-r from-dusk-start to-dusk-end text-white text-xs font-bold rounded-xl hover:opacity-90 transition shadow-lg"
+                        >
+                          DONE
+                        </button>
+                      </div>
                     </div>
                   )}
 
@@ -108,9 +148,27 @@ function App() {
                             <span className="text-slate-200 font-medium group-hover:text-dusk-end transition">
                               {task.title}
                             </span>
-                            <span className="text-[10px] text-slate-500 uppercase tracking-widest mt-0.5">Note • #Task</span>
+                            <div className="flex items-center gap-2">
+                              <span className="text-[10px] text-slate-500 uppercase tracking-widest mt-0.5">Note • #Task</span>
+                              {task.date && (
+                                <span className="text-[10px] text-dusk-start font-bold uppercase tracking-widest mt-0.5 italic">
+                                  {task.date}
+                                </span>
+                              )}
+                            </div>
                           </div>
-                          <div className={`w-2 h-2 rounded-full ${task.done ? 'bg-green-500' : 'bg-dusk-start'}`}></div>
+                          <div className="flex items-center gap-3">
+                            <button 
+                              onClick={() => deleteTask(task.id)}
+                              className="text-slate-600 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100"
+                              title="Delete Task"
+                            >
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                              </svg>
+                            </button>
+                            <div className={`w-2 h-2 rounded-full ${task.done ? 'bg-green-500' : 'bg-dusk-start'}`}></div>
+                          </div>
                         </li>
                       ))
                     ) : (

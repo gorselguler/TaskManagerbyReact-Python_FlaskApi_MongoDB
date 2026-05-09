@@ -12,7 +12,8 @@ def task_to_dict(task):
     return {
         'id': str(task['_id']),   # Convert ObjectId to string
         'title': task['title'],
-        'done': task.get('done', False)
+        'done': task.get('done', False),
+        'date': task.get('date', None)
     }
 
 # GET /tasks — return all tasks
@@ -27,7 +28,13 @@ def create_task():
     data = request.get_json()
     if not data or not data.get('title'):
         return jsonify({'error': 'Title is required'}), 400
-    result = tasks_collection.insert_one({'title': data['title'], 'done': False})
+    
+    task_data = {
+        'title': data['title'],
+        'done': False,
+        'date': data.get('date')
+    }
+    result = tasks_collection.insert_one(task_data)
     new_task = tasks_collection.find_one({'_id': result.inserted_id})
     return jsonify(task_to_dict(new_task)), 201
 
