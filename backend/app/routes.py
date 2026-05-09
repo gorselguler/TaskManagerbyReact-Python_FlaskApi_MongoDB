@@ -1,6 +1,9 @@
 from flask import Blueprint, request, jsonify
 from .models import tasks_collection
-from bson import ObjectId  # MongoDB uses ObjectId instead of integer IDs
+try:
+    from bson import ObjectId  # MongoDB uses ObjectId instead of integer IDs
+except ImportError:
+    from pymongo.bson import ObjectId
 
 tasks_bp = Blueprint('tasks', __name__)
 
