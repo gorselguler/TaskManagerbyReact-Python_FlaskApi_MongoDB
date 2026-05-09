@@ -2,7 +2,17 @@
 
 A full-stack Task Manager application built with **React 19**, **Tailwind CSS v4**, **Python Flask**, and **MongoDB**.
 
+![Auth Screen](auth.png)
 ![Dashboard Preview](Dashboard.png)
+
+---
+
+## Features
+
+- **Auth System:** Secure Login and Register screens.
+- **Quick Notes:** Create tasks with titles and specific dates.
+- **Delete System:** Remove tasks with a single click.
+- **Database Persistence:** All data is saved in MongoDB.
 
 ---
 
@@ -16,40 +26,24 @@ A full-stack Task Manager application built with **React 19**, **Tailwind CSS v4
 
 ---
 
-## Design System
-
-The application features a modern dark-themed dashboard with custom color palettes:
-
-- **Dusk Theme**: Indigo to Pink gradients for primary actions and system highlights.
-- **Warm Sand**: Amber to Red gradients for documents and secondary accents.
-- **Glassmorphism**: Border-based card designs and semi-transparent backgrounds.
-
-
 ## Project Structure
 
 ```
 ├── backend/
 │   ├── app/
-│   │   ├── __init__.py     # Flask app setup, CORS
-│   │   ├── models.py       # MongoDB connection
-│   │   └── routes.py       # API endpoints
-│   ├── requirements.txt
-│   └── run.py
+│   │   ├── __init__.py
+│   │   ├── models.py       # User and Task collections
+│   │   └── routes.py       # Auth & Task API endpoints
 │
 └── react/
     └── frontend/
         └── src/
-            └── App.jsx     # Main React component
+            ├── App.jsx     
+            └── components/
+                ├── Auth.jsx        # Login/Register Screen
+                ├── LeftSideBar.jsx
+                └── TopBar.jsx
 ```
-
----
-
-## Features
-
-- Add new tasks
-- View all tasks
-- Delete tasks
-- Data saved in MongoDB (tasks stay after page refresh)
 
 ---
 
@@ -91,12 +85,13 @@ Frontend runs at: `http://localhost:5173`
 
 ## API Endpoints
 
-| Method | Endpoint       | Description        |
-|--------|----------------|--------------------|
-| GET    | /tasks         | Get all tasks      |
-| POST   | /tasks         | Create a new task  |
-| PUT    | /tasks/`<id>`  | Update a task      |
-| DELETE | /tasks/`<id>`  | Delete a task      |
+| Method | Endpoint       | Description                 |
+|--------|----------------|-----------------------------|
+| POST   | /auth/register | Register a new user         |
+| POST   | /auth/login    | Login and get session       |
+| GET    | /tasks         | Get all tasks               |
+| POST   | /tasks         | Create a new task with date |
+| DELETE | /tasks/<id>    | Delete a task               |
 
 ---
 

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import TopBar from './components/TopBar';
 import LeftSidebar from './components/LeftSideBar';
+import Auth from './components/Auth';
 
 function App() {
   // ─── 1. STATES (DURUMLAR) ───
@@ -8,7 +9,7 @@ function App() {
   const [newTaskTitle, setNewTaskTitle] = useState('');
   const [isAdding, setIsAdding] = useState(false); // Controls the input visibility
   const [newTaskDate, setNewTaskDate] = useState(''); // New state for date
-
+   const [user, setUser] = useState(null);
   // ─── 2. EFFECTS (YAN ETKİLER) ───
   useEffect(() => {
     fetchTasks();
@@ -69,6 +70,10 @@ function App() {
       addTask();
     }
   };
+
+  if (!user) {
+    return <Auth onLogin={(userData) => setUser(userData)} />;
+  }
 
   // ─── 4. UI (ARAYÜZ) ───
   return (
