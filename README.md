@@ -2,7 +2,7 @@
 
 A full-stack Task Manager application built with **React 19**, **Tailwind CSS v4**, **Python Flask**, and **MongoDB**.
 
-![Auth Screen](auth.png)
+![Auth Screen](Auth.png)
 ![Dashboard Preview](Dashboard.png)
 
 ---
