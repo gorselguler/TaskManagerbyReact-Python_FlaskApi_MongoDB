@@ -1,10 +1,11 @@
 import os
 from flask import Flask
 from flask_cors import CORS
-from .routes import tasks_bp, documents_bp
+from .routes import tasks_bp
 
 def create_app():
     app = Flask(__name__)
+    # CORS allows our React app (running on port 3000) to talk to Flask (port 5000)
     CORS(app)
     
     # --- UPDATED: Use absolute path for the uploads folder ---
@@ -16,6 +17,4 @@ def create_app():
     
     # Register blueprints
     app.register_blueprint(tasks_bp)
-    app.register_blueprint(documents_bp)
-    
     return app
