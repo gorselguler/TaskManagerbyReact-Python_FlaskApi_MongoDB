@@ -1,29 +1,29 @@
 import { useState } from 'react';
+// IMPORT YOUR LOGO HERE (Change 'logo.jpg' to your actual file name)
+import logo from '../assets/logo.jpg'; 
 
 function Auth({ onLogin }) {
-  // Line 1: 'isLogin' state controls if we show Login or Register form.
-  // Satır 1: 'isLogin' state'i Giriş mi yoksa Kayıt formunu mu göstereceğimizi belirler.
   const [isLogin, setIsLogin] = useState(true);
-
-  // Line 2: States for the input fields.
-  // Satır 2: Giriş alanları için state'ler.
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevents page reload (Sayfanın yenilenmesini engeller)
-    
-    // Line 3: Send user data back to App.jsx.
-    // Satır 3: Kullanıcı verisini App.jsx'e geri gönderir.
+    e.preventDefault(); 
     onLogin({ email }); 
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-950 p-6">
       <div className="max-w-md w-full bg-slate-900 border border-slate-800 rounded-[2.5rem] p-10">
-        <h1 className="text-3xl font-black text-white text-center mb-8 italic">
-          TASK<span className="text-violet-500">MANAGER</span>
-        </h1>
+        
+        {/* IMAGE LOGO SECTION */}
+        <div className="flex justify-center mb-8">
+          <img 
+            src={logo} 
+            alt="Project Logo" 
+            className="h-16 w-auto object-contain" 
+          />
+        </div>
         
         <form onSubmit={handleSubmit} className="space-y-4">
           <input 
