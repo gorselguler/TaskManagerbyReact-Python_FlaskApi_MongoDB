@@ -3,24 +3,22 @@ import TopBar from './components/TopBar';
 import LeftSidebar from './components/LeftSideBar';
 import Auth from './components/Auth';
 import Documents from './components/Documents';
+import Gallery from './components/Gallery';
 
 function App() {
-  // ─── 1. STATES (DURUMLAR) ───
   const [activeTab, setActiveTab] = useState('Dashboard'); 
   const [tasks, setTasks] = useState([]);
-  const [dashboardDocs, setDashboardDocs] = useState([]); // Dashboard için doküman state'i
+  const [dashboardDocs, setDashboardDocs] = useState([]); 
   const [newTaskTitle, setNewTaskTitle] = useState('');
   const [isAdding, setIsAdding] = useState(false); 
   const [newTaskDate, setNewTaskDate] = useState(''); 
   const [user, setUser] = useState(null);
 
-  // ─── 2. EFFECTS (YAN ETKİLER) ───
   useEffect(() => {
     fetchTasks();
-    fetchDashboardDocs(); // Sayfa yüklendiğinde dokümanları da çek
+    fetchDashboardDocs(); 
   }, []);
 
-  // ─── 3. LOGIC HANDLERS (MANTIK) ───
   const fetchTasks = async () => {
     try {
       const response = await fetch('http://localhost:5000/tasks');
@@ -31,7 +29,6 @@ function App() {
     }
   };
 
-  // Dashboard için son eklenen dokümanları getiren fonksiyon
   const fetchDashboardDocs = async () => {
     try {
       const response = await fetch('http://localhost:5000/documents');
@@ -93,7 +90,6 @@ function App() {
     window.open(`http://localhost:5000${url}`, '_blank');
   };
 
-  // Dashboard kutularına özel transparan renk stilleri
   const getDashboardBadgeStyle = (category) => {
     switch (category) {
       case 'PDF': return 'bg-yellow-500/10 text-yellow-500 border-yellow-500/20';
@@ -107,7 +103,6 @@ function App() {
     return <Auth onLogin={(userData) => setUser(userData)} />;
   }
 
-  // ─── 4. UI (ARAYÜZ) ───
   return (
     <div className="flex flex-col h-screen overflow-hidden bg-dashboard-bg text-slate-300">
       <TopBar />
@@ -244,6 +239,9 @@ function App() {
               </div>
             </div>
           )}
+
+          {/* Render Gallery Page */}
+          {activeTab === 'Gallery' && <Gallery />}
 
           {/* Render Documents Page */}
           {activeTab === 'Documents' && <Documents />}
