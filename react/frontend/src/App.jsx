@@ -4,6 +4,7 @@ import LeftSidebar from './components/LeftSideBar';
 import Auth from './components/Auth';
 import Documents from './components/Documents';
 import Gallery from './components/Gallery';
+import Notes from './components/Notes';
 
 function App() {
   const [activeTab, setActiveTab] = useState('Dashboard'); 
@@ -239,6 +240,9 @@ function App() {
               </div>
             </div>
           )}
+
+          {/* Render Notes Page */}
+          {activeTab === 'Notes' && <Notes />}
 
           {/* Render Gallery Page */}
           {activeTab === 'Gallery' && <Gallery />}
